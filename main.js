@@ -99,18 +99,17 @@ var getBookInfoResult = (_0) => __async(void 0, [_0], function* ({
     const index = (_e = html.querySelector("#infoset_toc > div.infoSetCont_wrap > div.infoWrap_txt")) == null ? void 0 : _e.getText().replace(/(<br>|<br\/>|<br \/>)/g, "\r\n").replace(/(<b>|<B>|<\/b>|<\/B>|\[|\]|\*|\#)/g, "").split("\n").map((line) => line.trim() + "\n").join("");
     const frontmatter = {
       created: `${new Date(+new Date() + 3240 * 1e4).toISOString().split("T")[0] + " " + new Date().toTimeString().split(" ")[0].slice(0, 5)}`,
-      tag: `${tag.join(" ")}`,
-      title: `${title}`,
-      author: `${author.join(", ")}`,
-      category: `${tag[1]}`,
+      tag: tag[0],
+      book_tag: tag.slice(2),
+      subtitle: subTitle,
+      author,
+      category: tag[1],
       total_page: page,
       publish_date: `${publishDate}`,
       cover_url: `${coverUrl}`,
-      status: `${status}`,
-      start_read_date: `${new Date(+new Date() + 3240 * 1e4).toISOString().split("T")[0]}`,
-      finish_read_date: `${new Date(+new Date() + 3240 * 1e4).toISOString().split("T")[0]}`,
-      my_rate: +myRate,
-      book_note: `${bookNote}`
+      is_done: false,
+      start_date: `${new Date(+new Date() + 3240 * 1e4).toISOString().split("T")[0]}`,
+      finish_date: `${new Date(+new Date() + 3240 * 1e4).toISOString().split("T")[0]}`
     };
     const main = `---
 ${(0, import_obsidian.stringifyYaml)(frontmatter)}---
@@ -125,7 +124,7 @@ ${index}` : ""}`;
     return {
       ok: true,
       book: {
-        title: title.replace("\uFF1A", " ").replace("\uFF1F", "").replace("/", "\uFF0F").replace(/\s{2,}/gi, " "),
+        title: mainTitle.replace("\uFF1A", " ").replace("\uFF1F", "").replace("/", "\uFF0F").replace(/\s{2,}/gi, " "),
         main
       }
     };

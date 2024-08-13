@@ -157,22 +157,21 @@ export const getBookInfoResult = async ({
 				" " +
 				new Date().toTimeString().split(" ")[0].slice(0, 5)
 			}`,
-			tag: `${tag.join(" ")}`,
-			title: `${title}`,
-			author: `${author.join(", ")}`,
-			category: `${tag[1]}`,
+			tag: tag[0],
+			book_tag: tag.slice(2),
+			subtitle: subTitle,
+			author: author,
+			category: tag[1],
 			total_page: page,
 			publish_date: `${publishDate}`,
 			cover_url: `${coverUrl}`,
-			status: `${status}`,
-			start_read_date: `${
+			is_done: false,
+			start_date: `${
 				new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0]
 			}`,
-			finish_read_date: `${
+			finish_date: `${
 				new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0]
 			}`,
-			my_rate: +myRate,
-			book_note: `${bookNote}`,
 		};
 
 		const main = `---\n${stringifyYaml(frontmatter)}---\n${
@@ -184,7 +183,7 @@ export const getBookInfoResult = async ({
 		return {
 			ok: true,
 			book: {
-				title: title
+				title: mainTitle
 					.replace("：", " ")
 					.replace("？", "")
 					.replace("/", "／")
